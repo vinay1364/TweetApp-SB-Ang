@@ -9,7 +9,8 @@ import {map} from 'rxjs/operators';
 export class AuthenticationService {
 
     //currentUser : User;
-    private baseURL = "http://localhost:8081/";
+    //private baseURL = "http://localhost:8081/";
+    private baseURL = "http://localhost:8081/api/v1.0/tweets/";
     userName:string;
 
     constructor(private httpClient: HttpClient) {
@@ -46,7 +47,7 @@ export class AuthenticationService {
  
    logOut() {
     console.log("In Authentication Srvc - logOut()-> username=",this.userName.substring(1,this.userName.length-1));    
-     this.httpClient.get("http://localhost:8081/"+"logout/"+this.userName.substring(1,this.userName.length-1))
+     this.httpClient.get(`${this.baseURL}`+"logout/"+this.userName.substring(1,this.userName.length-1))
      .subscribe( data =>{
       console.log("In Authentication Srvc - logOut()-> response=",data);
       sessionStorage.removeItem('username');

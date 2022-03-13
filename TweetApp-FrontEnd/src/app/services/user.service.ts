@@ -9,7 +9,8 @@ import { ForgotPasswordRequest } from '../model/forgot-password-request';
 })
 export class UserService {
  
-  private baseURL = "http://localhost:8081/";
+  //private baseURL = "http://localhost:8081/";
+  private baseURL = "http://localhost:8081/api/v1.0/tweets/";
 
   constructor(private httpClient: HttpClient) { }
   

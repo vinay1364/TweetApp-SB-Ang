@@ -13,7 +13,8 @@ import {map} from 'rxjs/operators';
 })
 export class TweetService {
 
-  private baseURL = "http://localhost:8081/";
+  //private baseURL = "http://localhost:8081/";
+  private baseURL = "http://localhost:8081/api/v1.0/tweets/";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -25,25 +26,25 @@ export class TweetService {
   }
 
   postTweet(username: string, tweet : TweetRequest){
-    return this.httpClient.post(`${this.baseURL}`+`tweets/`+username+`/add`,tweet);
+    return this.httpClient.post(`${this.baseURL}`+username+`/add`,tweet);
   }
   
   updateTweet(tweetId : string, description : string, username: string){
     let tweetUpdate = new TweetUpdate(tweetId,description);    
-    return this.httpClient.put(`${this.baseURL}`+"tweets/"+username+"/update/"+tweetId,tweetUpdate);
+    return this.httpClient.put(`${this.baseURL}`+username+"/update/"+tweetId,tweetUpdate);
   }  
 
   editTweet(id : string, username: string){
-    return this.httpClient.get<TweetResponse>(`${this.baseURL}`+"tweets/"+username+"/"+id);
+    return this.httpClient.get<TweetResponse>(`${this.baseURL}`+username+"/"+id);
   }
   
   deleteTweet(tweetId : string, username: string){
-    return this.httpClient.delete(`${this.baseURL}`+"tweets/"+username+"/delete/"+tweetId);
+    return this.httpClient.delete(`${this.baseURL}`+username+"/delete/"+tweetId);
   }
 
   likeTweet(tweetId : string, username: string){
     // let headers = new HttpHeaders({'tweetId':id});
-    return this.httpClient.put(`${this.baseURL}`+"tweets/"+username+"/like/"+tweetId,null).pipe(
+    return this.httpClient.put(`${this.baseURL}`+username+"/like/"+tweetId,null).pipe(
       map((successData : Response)=>{
         console.log("success")
         console.log(successData)
@@ -62,7 +63,7 @@ export class TweetService {
     // let headers = new HttpHeaders({'tweetReply': reply});
     console.log(tweetId , reply);
     let sendReply = new Reply(reply,"","");
-    return this.httpClient.post(`${this.baseURL}`+"tweets/"+username+"/reply/"+tweetId,sendReply).pipe(
+    return this.httpClient.post(`${this.baseURL}`+username+"/reply/"+tweetId,sendReply).pipe(
       map((successData : Response)=>{
         console.log("success")
         console.log(successData)
