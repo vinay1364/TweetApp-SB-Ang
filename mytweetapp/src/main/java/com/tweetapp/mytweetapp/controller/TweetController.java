@@ -30,8 +30,8 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-//@RequestMapping("/api/v1.0/tweets")
-@RequestMapping("/")
+@RequestMapping("/api/v1.0/tweets")
+//@RequestMapping("/")
 @Api(tags = { SwaggerConfig.TWEET_CONT_TAG })
 public class TweetController {
 
@@ -45,11 +45,8 @@ public class TweetController {
 	@Autowired
 	public TweetController(TweetServiceImpl tweetService, Producer producer) {
 		super();
-		// this.userService = userService;
 		this.tweetService = tweetService;
 		this.producer = producer;
-//		System.out.println("In TweetAppController constructor-> userService object created-" + (userService!=null));
-//		System.out.println("In TweetAppController constructor-> tweetService object created-" + (tweetService!=null));
 	}
 
 	// Get All Tweets
@@ -77,7 +74,8 @@ public class TweetController {
 	}
 
 	@ApiOperation(value = "Get all the details of a Tweet", response = ResponseEntity.class)
-	@GetMapping(value = "/tweets/{username}/{id}")
+	//@GetMapping(value = "/tweets/{username}/{id}")
+	@GetMapping(value = "/{username}/{id}")
 	public ResponseEntity<?> getTweetDeatils(@PathVariable("username") String username,
 			@PathVariable("id") String tweetId) {
 		logger.debug("Get all the Details of a Tweet.. username={}, tweetId={}", username, tweetId);
@@ -101,7 +99,8 @@ public class TweetController {
 
 	// Post new Tweet using Kafka
 	@ApiOperation(value = "Post a new Tweet", response = ResponseEntity.class)
-	@PostMapping("/tweets/{username}/add")
+	//@PostMapping("/tweets/{username}/add")
+	@PostMapping("/{username}/add")
 	public ResponseEntity<?> postTweet(@PathVariable("username") String userName, @RequestBody TweetDto tweetDto) {
 		logger.debug("Posting a new Tweet .. username={}, tweet={}", userName, tweetDto);
 		logger.info("Sending data to kafka Producer method..");
@@ -134,7 +133,8 @@ public class TweetController {
 
 	// Update Tweet
 	@ApiOperation(value = "Update a Tweet", response = ResponseEntity.class)
-	@PutMapping("/tweets/{username}/update/{id}") // username path variable is required?
+	//@PutMapping("/tweets/{username}/update/{id}") // username path variable is required?
+	@PutMapping("/{username}/update/{id}")
 	public ResponseEntity<?> updateTweet(@PathVariable("username") String userName, @PathVariable("id") String tweetId,
 			@RequestBody TweetDto tweetDto) {
 		logger.debug("Updating a Tweet .. username={}, tweetId={}, tweet={}", userName, tweetId, tweetDto);
@@ -144,7 +144,8 @@ public class TweetController {
 
 	// Delete Tweet
 	@ApiOperation(value = "Delete a Tweet", response = ResponseEntity.class)
-	@DeleteMapping("/tweets/{username}/delete/{id}") // username path variable is required?
+	//@DeleteMapping("/tweets/{username}/delete/{id}") 
+	@DeleteMapping("/{username}/delete/{id}")
 	public ResponseEntity<?> deleteTweet(@PathVariable("username") String userName,
 			@PathVariable("id") String tweetId) {
 		boolean status = false;
@@ -156,7 +157,8 @@ public class TweetController {
 
 	// Like Tweet
 	@ApiOperation(value = "Like a Tweet", response = ResponseEntity.class)
-	@PutMapping("/tweets/{username}/like/{id}") // username path variable is required?
+	//@PutMapping("/tweets/{username}/like/{id}")
+	@PutMapping("/{username}/like/{id}")
 	public ResponseEntity<?> likeTweet(@PathVariable("username") String userName, @PathVariable("id") String tweetId) {
 		logger.debug("Liked a Tweet .. username={}, tweetId={}", userName, tweetId);
 		logger.info("Tweet Liked Successfully.");
@@ -165,7 +167,8 @@ public class TweetController {
 
 	// Reply to Tweet
 	@ApiOperation(value = "Reply to a Tweet", response = ResponseEntity.class)
-	@PostMapping("/tweets/{username}/reply/{id}")
+	//@PostMapping("/tweets/{username}/reply/{id}")
+	@PostMapping("/{username}/reply/{id}")
 	public ResponseEntity<?> replyToTweet(@PathVariable("username") String userName, @PathVariable("id") String tweetId,
 			@RequestBody Reply replyTweet) {
 		logger.debug("Reply a Tweet .. username={}, tweetId={}", userName, tweetId);

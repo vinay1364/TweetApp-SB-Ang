@@ -27,8 +27,8 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-//@RequestMapping("/api/v1.0/tweets")
-@RequestMapping("/")
+@RequestMapping("/api/v1.0/tweets")
+//@RequestMapping("/")
 @Api(tags = { SwaggerConfig.USER_CONT_TAG })
 public class UserController {
 
@@ -40,8 +40,6 @@ public class UserController {
 	public UserController(UserService userService) {
 		super();
 		this.userService = userService;
-//		System.out.println("In TweetAppController constructor-> userService object created-" + (userService!=null));
-//		System.out.println("In TweetAppController constructor-> tweetService object created-" + (tweetService!=null));
 	}
 
 	// Register new User
@@ -51,7 +49,6 @@ public class UserController {
 		//logger.trace("Entering Controller method - registerUser()");
 		logger.debug("Register the new user--{}",userDto.getEmail());
 		try {
-			//System.out.println("registerUser() REquest->" + userDto.toString());
 			UserDto registeredUser = userService.registerUser(userDto);
 			logger.info("User Registered Successfully.");
 			return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
@@ -66,10 +63,8 @@ public class UserController {
 	@ApiOperation(value = "Login a User", response = ResponseEntity.class)
 	@PostMapping("/login")
 	public ResponseEntity<?> loginUser(@RequestBody UserDto userDto) {
-		//System.out.println("LoginUSer() REquest->" + userDto.toString());
 		logger.debug("Login the user--{}",userDto.getEmail());
 		UserDto loginUser = userService.loginUser(userDto);		
-		//System.out.println("LoginUSer() Success->" + loginUser.toString());
 		logger.info("User Logged In Successfully.");
 		return new ResponseEntity<UserDto>(loginUser, HttpStatus.OK);
 	}
